@@ -1,4 +1,4 @@
-import { callSendAPI } from "../app.js";
+send = require("./send");
 
 function handleMessage(sender_psid, received_message) {
   let response;
@@ -43,5 +43,7 @@ function handleMessage(sender_psid, received_message) {
   }
 
   // Send the response message
-  callSendAPI(sender_psid, response);
+  send.callSendAPI(sender_psid, response);
 }
+
+exports.handleMessage = handleMessage;
