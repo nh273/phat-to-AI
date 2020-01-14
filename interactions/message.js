@@ -1,6 +1,8 @@
 send = require("./send");
 interactionBank = require("./interactionBank");
 
+console.log(interactionBank.bank);
+
 function weightedRand(spec) {
   //stolen from:
   //https://stackoverflow.com/questions/8435183/generate-a-weighted-random-number
@@ -15,6 +17,7 @@ function weightedRand(spec) {
 
 function chooseResponse(input) {
   for (entry in interactionBank.bank) {
+    console.log("entry");
     if (entry.input_contains.some(s => s.includes(input))) {
       return weightedRand(entry.responses);
     }
