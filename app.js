@@ -22,8 +22,7 @@
 ("use strict");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 // Imports dependencies and set up http server
-const request = require("request"),
-  express = require("express"),
+const express = require("express"),
   body_parser = require("body-parser"),
   app = express().use(body_parser.json()), // creates express http server
   send = require("./interactions/send"),
