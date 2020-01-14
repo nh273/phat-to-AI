@@ -1,4 +1,26 @@
 send = require("./send");
+interactionBank = require("./interactionBank");
+
+function weightedRand(spec) {
+  //stolen from:
+  //https://stackoverflow.com/questions/8435183/generate-a-weighted-random-number
+  var i,
+    sum = 0,
+    r = Math.random();
+  for (i in spec) {
+    sum += spec[i].prob;
+    if (r <= sum) return i;
+  }
+}
+
+function chooseResponse(input) {
+  for (entry in interactionBank.bank) {
+    if (entry.input_contains.some(s => s.includes(input))) {
+      return weightedRand(entry.responses);
+    }
+  }
+  return weightedRand(interactionBank.stock);
+}
 
 function handleMessage(sender_psid, received_message) {
   let response;
@@ -7,39 +29,7 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    response = {
-      text: `You sent the message: "${received_message.text}". Now send me an attachment!`
-    };
-  } else if (received_message.attachments) {
-    // Get the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
-    response = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [
-            {
-              title: "Is this the right picture?",
-              subtitle: "Tap a button to answer.",
-              image_url: attachment_url,
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Yes!",
-                  payload: "yes"
-                },
-                {
-                  type: "postback",
-                  title: "No!",
-                  payload: "no"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    };
+    response = chooseResponse(received_message.text);
   }
 
   // Send the response message
