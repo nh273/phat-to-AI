@@ -18,7 +18,7 @@ function weightedRand(spec) {
 
 function chooseResponse(input) {
   for (entry of interactionBank.bank) {
-    if (entry.input_contains.some(s => s.includes(input))) {
+    if (entry.input_contains.some(kwd => input.includes(kwd))) {
       return weightedRand(entry.responses);
     }
   }
@@ -31,7 +31,7 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    response = chooseResponse(received_message.text);
+    response = chooseResponse(received_message.text.toLowerCase());
     console.log("chosen response: " + response.text);
   }
 
