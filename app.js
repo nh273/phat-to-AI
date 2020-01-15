@@ -28,6 +28,9 @@ const express = require("express"),
   postback = require("./interactions/postback"),
   message = require("./interactions/message");
 
+// html view engine
+app.engine("html", require("ejs").renderFile);
+
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
 
@@ -85,4 +88,12 @@ app.get("/webhook", (req, res) => {
       res.sendStatus(403);
     }
   }
+});
+
+app.get("/terms", function(req, res) {
+  res.render("terms.html");
+});
+
+app.get("/privacy", function(req, res) {
+  res.render("privacy.html");
 });
