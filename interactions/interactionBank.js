@@ -54,7 +54,9 @@ const bank = [
 const stock = [
   { content: initialResponse, prob: 0.8 },
   {
-    content: "Chả hiểu con nói gì. Thôi thứ nhất là tu tại gia, con về đi",
+    content: {
+      text: "Chả hiểu con nói gì. Thôi thứ nhất là tu tại gia, con về đi"
+    },
     prob: 0.2
   }
 ];

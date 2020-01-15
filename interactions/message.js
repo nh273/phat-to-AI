@@ -1,8 +1,6 @@
 send = require("./send");
 interactionBank = require("./interactionBank");
 
-console.log(interactionBank.bank);
-
 function weightedRand(spec) {
   //stolen from:
   //https://stackoverflow.com/questions/8435183/generate-a-weighted-random-number
@@ -11,13 +9,15 @@ function weightedRand(spec) {
     r = Math.random();
   for (i in spec) {
     sum += spec[i].prob;
-    if (r <= sum) return i;
+    if (r <= sum) {
+      var res = spec[i].content;
+      return res;
+    }
   }
 }
 
 function chooseResponse(input) {
-  for (entry in interactionBank.bank) {
-    console.log("entry");
+  for (entry of interactionBank.bank) {
     if (entry.input_contains.some(s => s.includes(input))) {
       return weightedRand(entry.responses);
     }
@@ -27,12 +27,12 @@ function chooseResponse(input) {
 
 function handleMessage(sender_psid, received_message) {
   let response;
-
   // Checks if the message contains text
   if (received_message.text) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = chooseResponse(received_message.text);
+    console.log("chosen response: " + response.text);
   }
 
   // Send the response message
