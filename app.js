@@ -25,7 +25,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const express = require("express"),
   body_parser = require("body-parser"),
   app = express().use(body_parser.json()), // creates express http server
-  send = require("./interactions/send"),
+  postback = require("./interactions/postback"),
   message = require("./interactions/message");
 
 // Sets server port and logs message on success
@@ -52,7 +52,7 @@ app.post("/webhook", (req, res) => {
       if (webhook_event.message) {
         message.handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
-        handlePostback(sender_psid, webhook_event.postback);
+        postback.handlePostback(sender_psid, webhook_event.postback);
       }
     });
     // Return a '200 OK' response to all events
