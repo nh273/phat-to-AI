@@ -29,6 +29,15 @@ const initialResponse = {
 
 const bank = [
   {
+    input_contains: ["shiba", "ny"],
+    responses: [
+      {
+        content: { text: "Người yêu con is the best!" },
+        prob: 1
+      }
+    ]
+  },
+  {
     input_contains: ["h1b", "visa"],
     responses: [
       {
