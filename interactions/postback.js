@@ -7,10 +7,10 @@ function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === "yes") {
-    response = { text: "Thanks!" };
-  } else if (payload === "no") {
-    response = { text: "Oops, try sending another image." };
+  if (payload === "pray") {
+    response = { text: "Thế cầu gì cầu đi! Nhanh lên, nhà bao việc" };
+  } else if (payload === "pay") {
+    response = { text: "Chờ tí nhé để thầy lấy ví" };
   }
   // Send the message to acknowledge the postback
   send.callSendAPI(sender_psid, response);
